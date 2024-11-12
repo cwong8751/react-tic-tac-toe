@@ -20,6 +20,13 @@ export default function Board() {
   );
 }
 
+// individual square 
 function Square({value}) {
-  return <button className="square">{value}</button>;
+
+  // handle click
+  function handleClick(){
+    // do nothing yet 
+  }
+
+  return <button className="square" onClick={handleClick}>{value}</button>;
 }
