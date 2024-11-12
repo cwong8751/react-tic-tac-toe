@@ -30,8 +30,9 @@ function Square() {
 
   // handle click
   function handleClick(){
-    // do nothing yet 
+    // set value to X
+    setVal('X');
   }
 
-  return <button className="square" onClick={handleClick}>{value}</button>;
+  return <button className="square" onClick={handleClick}>{val}</button>;
 }
