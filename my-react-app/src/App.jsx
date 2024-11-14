@@ -5,7 +5,7 @@ export default function Board() {
   const [squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i) {
-    if (squares[i]) { return; } // don't fill something that's already filled
+    if (squares[i] || calculateWinner(squares)) { return; } // don't fill something that's already filled
 
     const newSquares = squares.slice();
     if (xisNext) { // take turns 
@@ -18,8 +18,18 @@ export default function Board() {
     setXisNext(!xisNext);
   }
 
+  // calculate winner
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner) {
+    status = "Winner: " + winner;
+  } else {
+    status = "Next player: " + (xisNext ? "X" : "O");
+  }
+
   return (
     <>
+    <div className="status">{status}</div>
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
