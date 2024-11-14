@@ -1,8 +1,29 @@
 import { useState } from "react";
 
-export default function Board() {
+// define game class
+export default function Game() {
   const [xisNext, setXisNext] = useState(true);
-  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const currentSquares = history[history.length - 1];
+
+  function handlePlay(nextSquares){
+    setHistory([...history, nextSquares]);
+    setXisNext(!xisNext);
+  }
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board xisNext={xisNext} squares={currentSquares} onPlay={handlePlay} />
+      </div>
+      <div className="game-info">
+        <ol>{/*TODO*/}</ol>
+      </div>
+    </div>
+  );
+}
+
+function Board({xisNext, squares, onPlay}) {
 
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) { return; } // don't fill something that's already filled
@@ -14,8 +35,7 @@ export default function Board() {
     else {
       newSquares[i] = "O";
     }
-    setSquares(newSquares);
-    setXisNext(!xisNext);
+    onPlay(newSquares);
   }
 
   // calculate winner
