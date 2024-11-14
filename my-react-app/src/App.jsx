@@ -4,20 +4,24 @@ import { useState } from "react";
 export default function Game() {
   const [xisNext, setXisNext] = useState(true);
   const [history, setHistory] = useState([Array(9).fill(null)]);
-  const currentSquares = history[history.length - 1];
+  const [currentMove, setCurrentMove] = useState(0);
+  const currentSquares = history[currentMove];
 
-  function handlePlay(nextSquares){
-    setHistory([...history, nextSquares]);
-    setXisNext(!xisNext);
+  function handlePlay(nextSquares) {
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    setHistory(nextHistory); 
+    setCurrentMove(nextHistory.length - 1); 
+    setXisNext(!xisNext); 
   }
 
   function jumpTo(nextmove){
-
+    setCurrentMove(nextmove);
+    setXisNext(nextmove % 2 === 0);
   }
 
   const moves = history.map((step, move) => {
     let description;
-    if (move) {
+    if (move > 0) {
       description = "Go to move #" + move;
     } else {
       description = "Go to game start";
